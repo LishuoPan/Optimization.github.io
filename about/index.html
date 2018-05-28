@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>About - Optimiation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "About";
+    var mkdocs_page_input_path = "about.md";
+    var mkdocs_page_url = "/about/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Optimiation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">About</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#dual-ascent">Dual Ascent</a></li>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Optimiation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>About</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h4 id="dual-ascent">Dual Ascent</h4>
+<p>Problem to solve:
+$$
+\mbox{minimize}  \ \ f(x) \ \mbox{subject  to} \ \ Ax=b  \x\ \in\ \mathbb{R}^{n} \ where \ A\  \in\  \mathbb{R}^{m\times n}\ and\ f:\mathbb{R}^{n} \rightarrow \mathbb{R}\ is\ convex
+$$</p>
+<p>The Lagrangian is:
+$$
+L(x,y)=f(x)+y^{T}(Ax-b)
+$$
+The dual function is:
+$$
+g(y) =\inf\limits_{x} L(x,y)=-f^{\ast}(-A^{T}y)-b^{T}y
+$$
+where $y$ is the dual variable or Lagrange multiplier, and the $f^*$ is the conjugate of the $f$. This function says taht $g(y)$ is convex of $y$.</p>
+<p>The definition of $f^{<em>}(y) $:
+$$
+f^{</em>}(y):\sup\limits_{x\in domf}:(y^{T}x-f(x))
+$$
+$Proof$:
+$$
+\begin{align}
+g(y) &amp;= \inf\limits_{x} L(x,y)=\inf\limits_{x}f(x) +y^{T}Ax-y^{T}b\&amp;=-\sup\limits_{x}-f(x)+y^{T}(-Ax)+y^{T}b\&amp;=-f^{*}(-A^{T}y)-y^{T}b
+\end{align}
+$$
+Now, the dual problem is 
+$$
+\mbox{maximize} \ g(y)
+$$
+with variable $y\in \mathbb{R}^{m}$.</p>
+<p>Assuming the strong duality holds. the optimal values of the primal and dual problems are the same.</p>
+<p>The primal optimal point $x^{<em>}$ form a dual optimal point $y^{</em>}$ as 
+$$
+x^{<em>}=arg\min\limits_{x} L(x,y^{</em>}),
+$$
+provided that there is only one minimizer of $L(x,y^{*})$. </p>
+<p>The notation $\mbox{argmin}_{x}F(x)$ denotes any minimizer of $F$. </p>
+<p>In the $dual\ ascent\ method$, we use <strong>greadient ascent</strong> to solve dual problem. Assuming $g$ is differentiable. We first find $x^{+}=argmin_{x}L(x,y)$, then $\nabla g(y)=Ax^{+}-b$, which is the residual for the equality constraint. 
+$$
+x^{k+1}:=arg\min\limits_{x}L(x,y^{k})\
+y^{k+1}:=y^{k}+\alpha^{k}(Ax^{k+1}-b),
+$$
+where $\alpha^{k}&gt;0$ is a step size, the $k$ is the iteration counter. With appropriate choice of $\alpha^{k}$, $g(y^{k+1})&gt;g(y^{k})$. </p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>
