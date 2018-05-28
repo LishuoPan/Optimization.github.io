@@ -1,7 +1,7 @@
 site_name: Optimiation
 pages:
 - Home: index.md
-- About: about.md
+- Daul Ascent: dual_ascent.md
 theme: readthedocs
 
 python:
