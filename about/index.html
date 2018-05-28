@@ -97,46 +97,47 @@
               
                 <h4 id="dual-ascent">Dual Ascent</h4>
 <p>Problem to solve:
-$$
-\mbox{minimize}  \ \ f(x) \ \mbox{subject  to} \ \ Ax=b  \x\ \in\ \mathbb{R}^{n} \ where \ A\  \in\  \mathbb{R}^{m\times n}\ and\ f:\mathbb{R}^{n} \rightarrow \mathbb{R}\ is\ convex
-$$</p>
+<script type="math/tex; mode=display">
+\mbox{minimize}  \ \ f(x) \\ \mbox{subject  to} \ \ Ax=b  \\x\ \in\ \mathbb{R}^{n} \ where \ A\  \in\  \mathbb{R}^{m\times n}\ and\ f:\mathbb{R}^{n} \rightarrow \mathbb{R}\ is\ convex
+</script>
+</p>
 <p>The Lagrangian is:
-$$
+<script type="math/tex; mode=display">
 L(x,y)=f(x)+y^{T}(Ax-b)
-$$
+</script>
 The dual function is:
-$$
+<script type="math/tex; mode=display">
 g(y) =\inf\limits_{x} L(x,y)=-f^{\ast}(-A^{T}y)-b^{T}y
-$$
-where $y$ is the dual variable or Lagrange multiplier, and the $f^*$ is the conjugate of the $f$. This function says taht $g(y)$ is convex of $y$.</p>
-<p>The definition of $f^{<em>}(y) $:
-$$
-f^{</em>}(y):\sup\limits_{x\in domf}:(y^{T}x-f(x))
-$$
-$Proof$:
-$$
+</script>
+where <script type="math/tex">y</script> is the dual variable or Lagrange multiplier, and the <script type="math/tex">f^*</script> is the conjugate of the <script type="math/tex">f</script>. This function says taht <script type="math/tex">g(y)</script> is convex of <script type="math/tex">y</script>.</p>
+<p>The definition of <script type="math/tex">f^{*}(y) </script>:
+<script type="math/tex; mode=display">
+f^{*}(y):\sup\limits_{x\in domf}:(y^{T}x-f(x))
+</script>
+<script type="math/tex">Proof</script>:
+<script type="math/tex; mode=display">
 \begin{align}
-g(y) &amp;= \inf\limits_{x} L(x,y)=\inf\limits_{x}f(x) +y^{T}Ax-y^{T}b\&amp;=-\sup\limits_{x}-f(x)+y^{T}(-Ax)+y^{T}b\&amp;=-f^{*}(-A^{T}y)-y^{T}b
+g(y) &= \inf\limits_{x} L(x,y)=\inf\limits_{x}f(x) +y^{T}Ax-y^{T}b\\&=-\sup\limits_{x}-f(x)+y^{T}(-Ax)+y^{T}b\\&=-f^{*}(-A^{T}y)-y^{T}b
 \end{align}
-$$
+</script>
 Now, the dual problem is 
-$$
+<script type="math/tex; mode=display">
 \mbox{maximize} \ g(y)
-$$
-with variable $y\in \mathbb{R}^{m}$.</p>
+</script>
+with variable <script type="math/tex">y\in \mathbb{R}^{m}</script>.</p>
 <p>Assuming the strong duality holds. the optimal values of the primal and dual problems are the same.</p>
-<p>The primal optimal point $x^{<em>}$ form a dual optimal point $y^{</em>}$ as 
-$$
-x^{<em>}=arg\min\limits_{x} L(x,y^{</em>}),
-$$
-provided that there is only one minimizer of $L(x,y^{*})$. </p>
-<p>The notation $\mbox{argmin}_{x}F(x)$ denotes any minimizer of $F$. </p>
-<p>In the $dual\ ascent\ method$, we use <strong>greadient ascent</strong> to solve dual problem. Assuming $g$ is differentiable. We first find $x^{+}=argmin_{x}L(x,y)$, then $\nabla g(y)=Ax^{+}-b$, which is the residual for the equality constraint. 
-$$
-x^{k+1}:=arg\min\limits_{x}L(x,y^{k})\
+<p>The primal optimal point <script type="math/tex">x^{*}</script> form a dual optimal point <script type="math/tex">y^{*}</script> as 
+<script type="math/tex; mode=display">
+x^{*}=arg\min\limits_{x} L(x,y^{*}),
+</script>
+provided that there is only one minimizer of <script type="math/tex">L(x,y^{*})</script>. </p>
+<p>The notation <script type="math/tex">\mbox{argmin}_{x}F(x)</script> denotes any minimizer of <script type="math/tex">F</script>. </p>
+<p>In the <script type="math/tex">dual\ ascent\ method</script>, we use <strong>greadient ascent</strong> to solve dual problem. Assuming <script type="math/tex">g</script> is differentiable. We first find <script type="math/tex">x^{+}=argmin_{x}L(x,y)</script>, then <script type="math/tex">\nabla g(y)=Ax^{+}-b</script>, which is the residual for the equality constraint. 
+<script type="math/tex; mode=display">
+x^{k+1}:=arg\min\limits_{x}L(x,y^{k})\\
 y^{k+1}:=y^{k}+\alpha^{k}(Ax^{k+1}-b),
-$$
-where $\alpha^{k}&gt;0$ is a step size, the $k$ is the iteration counter. With appropriate choice of $\alpha^{k}$, $g(y^{k+1})&gt;g(y^{k})$. </p>
+</script>
+where <script type="math/tex">\alpha^{k}>0</script> is a step size, the <script type="math/tex">k</script> is the iteration counter. With appropriate choice of <script type="math/tex">\alpha^{k}</script>, <script type="math/tex">g(y^{k+1})>g(y^{k})</script>. </p>
               
             </div>
           </div>
@@ -178,6 +179,7 @@ where $\alpha^{k}&gt;0$ is a step size, the $k$ is the iteration counter. With a
 </div>
     <script>var base_url = '..';</script>
     <script src="../js/theme.js"></script>
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
       <script src="../search/require.js"></script>
       <script src="../search/search.js"></script>
 
