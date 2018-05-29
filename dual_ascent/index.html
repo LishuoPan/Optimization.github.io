@@ -75,7 +75,15 @@
         </ul>
     
 
+    <li class="toctree-l2"><a href="#summary">Summary</a></li>
+    
+
     </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../Augmented Lagrangians and the Method of Multipliers/">Augmented Lagrangians and the Method of Multipliers</a>
 	    </li>
           
         </ul>
@@ -154,7 +162,7 @@ y^{k+1}:=y^{k}+\alpha^{k}(Ax^{k+1}-b),
 </script>
 where <script type="math/tex">\alpha^{k}>0</script> is a step size, the <script type="math/tex">k</script> is the iteration counter. With appropriate choice of <script type="math/tex">\alpha^{k}</script>, <script type="math/tex">g(y^{k+1})>g(y^{k})</script>. </p>
 <p>The principle is <script type="math/tex">\max\limits_{y}g(y)=\max\limits_{x}L(x,y) </script>, optimizing x and y alternatively to reach <script type="math/tex">L(x^{*},y^{*})</script>. </p>
-<h5 id="when-g-is-not-differentiable">When <script type="math/tex">g</script> is not differentiable</h5>
+<h6 id="when-g-is-not-differentiable">When <script type="math/tex">g</script> is not differentiable</h6>
 <p>The residual <script type="math/tex">Ax^{k+1}-b</script> is not the gradient of <script type="math/tex">g</script>, but the negative of a subgradient of <script type="math/tex">-g</script>.  It is often that <script type="math/tex">g(y^{k+1})\ngtr g(y^{k})</script>. The algorithm is usually called the <script type="math/tex">dual\ subgradient\ method</script>. </p>
 <p>If <script type="math/tex">\alpha^{k}</script> is chosen appropriately and several other assumptions hold, then <script type="math/tex">x^{k}</script> converges to an optimal point and <script type="math/tex">y^{k}</script> converges to an opotimal dual point. </p>
 <p>However, these assumptions <em>do not hold</em> in many cases. For example,  if <script type="math/tex">f</script> is a nonzero affine function of any component of x, <script type="math/tex">L</script> is unbounded below in <script type="math/tex">x</script> for most <script type="math/tex">y</script>. </p>
@@ -182,12 +190,17 @@ x^{k+1}_i:=arg\min\limits_{x_i}L_i(x_i,y^k)\\y^{k+1}:=y^k+\alpha^{k}(Ax^{k+1}-b)
 In this case, we refer to the dual ascent mehtod as <em>dual decomposition</em>. Dual decomposition is used to do dual acent method for separable <script type="math/tex">f(x)</script>. Dual decomposition is distributed dual ascent method. </p>
 <h6 id="implementation">Implementation:</h6>
 <p>Each iteration of the dual decomposition methods inclued <em>broadcast</em> and <em>gather</em> operation.  First, <script type="math/tex">A_ix_i^{k+1}</script> are collected(gathered). Second, compute the residual <script type="math/tex">Ax^{k+1}-b</script>.  Then, compute the (global) dual variable <script type="math/tex">y^{k+1}</script>. Finally, distributed (broadcast)  to the processors that carry out the <script type="math/tex">N</script> individual <script type="math/tex">x_i</script> minimization steps. </p>
+<h4 id="summary">Summary</h4>
+<p>Advantages: </p>
+<p>Disadvantages:</p>
               
             </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Augmented Lagrangians and the Method of Multipliers/" class="btn btn-neutral float-right" title="Augmented Lagrangians and the Method of Multipliers">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -218,6 +231,8 @@ In this case, we refer to the dual ascent mehtod as <em>dual decomposition</em>.
       
         <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../Augmented Lagrangians and the Method of Multipliers/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
