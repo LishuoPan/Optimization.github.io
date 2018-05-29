@@ -51,7 +51,7 @@ where $\alpha^{k}>0$ is a step size, the $k$ is the iteration counter. With appr
 
 The principle is $\max\limits_{y}g(y)=\max\limits_{x}L(x,y) $, optimizing x and y alternatively to reach $L(x^{*},y^{*})$. 
 
-##### When $g$ is not differentiable 
+###### When $g$ is not differentiable 
 
 The residual $Ax^{k+1}-b$ is not the gradient of $g$, but the negative of a subgradient of $-g$.  It is often that $g(y^{k+1})\ngtr g(y^{k})$. The algorithm is usually called the $dual\ subgradient\ method$. 
 
@@ -88,3 +88,9 @@ In this case, we refer to the dual ascent mehtod as *dual decomposition*. Dual d
 ###### Implementation:
 
 Each iteration of the dual decomposition methods inclued *broadcast* and *gather* operation.  First, $A_ix_i^{k+1}$ are collected(gathered). Second, compute the residual $Ax^{k+1}-b$.  Then, compute the (global) dual variable $y^{k+1}$. Finally, distributed (broadcast)  to the processors that carry out the $N$ individual $x_i$ minimization steps. 
+
+#### Summary
+
+Advantages: 
+
+Disadvantages:

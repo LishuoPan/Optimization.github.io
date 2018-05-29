@@ -1,15 +1,13 @@
-# Welcome to MkDocs
+# Welcome to Optimization
 
 For full documentation visit [mkdocs.org](http://mkdocs.org).
 
-## Commands
+## Dual Ascent
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
+* `Dual Ascent` - 
+* `Dual Decomposition` -
 
-## Project layout
+## Augmented Lagrangians and the Method of Multipliers
 
     mkdocs.yml    # The configuration file.
     docs/
