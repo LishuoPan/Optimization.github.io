@@ -20,7 +20,7 @@ where $y$ is the dual variable or Lagrange multiplier, and the $f^*$ is the conj
 $$
 f^{*}(y):\sup\limits_{x\in domf}:(y^{T}x-f(x))
 $$
-$Proof$:
+$\color{blue}{Proof}$:
 $$
 \begin{align}
 g(y) &= \inf\limits_{x} L(x,y)=\inf\limits_{x}f(x) +y^{T}Ax-y^{T}b\\&=-\sup\limits_{x}-f(x)+y^{T}(-Ax)+y^{T}b\\&=-f^{*}(-A^{T}y)-y^{T}b
@@ -42,10 +42,49 @@ provided that there is only one minimizer of $L(x,y^{*})$.
 
 The notation $\mbox{argmin}_{x}F(x)$ denotes any minimizer of $F$. 
 
-In the $dual\ ascent\ method$, we use **greadient ascent** to solve dual problem. Assuming $g$ is differentiable. We first find $x^{+}=argmin_{x}L(x,y)$, then $\nabla g(y)=Ax^{+}-b$, which is the residual for the equality constraint. 
+In the $dual\ ascent\ method$, we use **greadient ascent** to solve dual problem. Assuming $g$ is differentiable. We first find $x^{+}=argmin_{x}L(x,y)$, then the gradient $\nabla g(y)=Ax^{+}-b$, which is the residual for the equality constraint. 
 $$
 x^{k+1}:=arg\min\limits_{x}L(x,y^{k})\\
 y^{k+1}:=y^{k}+\alpha^{k}(Ax^{k+1}-b),
 $$
 where $\alpha^{k}>0$ is a step size, the $k$ is the iteration counter. With appropriate choice of $\alpha^{k}$, $g(y^{k+1})>g(y^{k})$. 
 
+The principle is $\max\limits_{y}g(y)=\max\limits_{x}L(x,y) $, optimizing x and y alternatively to reach $L(x^{*},y^{*})$. 
+
+##### When $g$ is not differentiable 
+
+The residual $Ax^{k+1}-b$ is not the gradient of $g$, but the negative of a subgradient of $-g$.  It is often that $g(y^{k+1})\ngtr g(y^{k})$. The algorithm is usually called the $dual\ subgradient\ method$. 
+
+If $\alpha^{k}$ is chosen appropriately and several other assumptions hold, then $x^{k}$ converges to an optimal point and $y^{k}$ converges to an opotimal dual point. 
+
+However, these assumptions *do not hold* in many cases. For example,  if $f$ is a nonzero affine function of any component of x, $L$ is unbounded below in $x$ for most $y$. 
+
+#### Dual Decomposition 
+
+The $\color{blue}{\mbox{major benefit}}$ of the dual ascent is that it can lead to a decentralized algorithm in some cases.
+
+Suppose, $f$ is *separable*, meaning that
+$$
+f(x)=\sum_{i=1}^{N}f_{i}(x_i),
+$$
+where $x=(x_1,…,x_N)$ and the variables $x_i\in\mathbb{R}^{n_i}$ are subvectors of $x$. 
+
+Partitioning the matrix $A$ conformably as 
+$$
+A=[A_1\cdot\cdot\cdot A_N],
+$$
+so $Ax=\sum_{i=1}^{N}A_ix_i$, the Lagrangian is 
+$$
+L(x,y )=\sum_{i=1}^{N}L_{i}(x_i,y)=\sum_{i=1}^{N}(f_{i}+y^TA_ix_i-(1/N)y^Tb)\\\mbox{such that } L(x,y)=f(x)+y^{T}(Ax-b)
+$$
+which is also separable in $x$. $\color{blue}{\mbox{The x-minimization step splits into N separate prolems that can be solved in parallel.}}$
+
+Now, the algorithm is 
+$$
+x^{k+1}_i:=arg\min\limits_{x_i}L_i(x_i,y^k)\\y^{k+1}:=y^k+\alpha^{k}(Ax^{k+1}-b).
+$$
+In this case, we refer to the dual ascent mehtod as *dual decomposition*. Dual decomposition is used to do dual acent method for separable $f(x)$. Dual decomposition is distributed dual ascent method. 
+
+###### Implementation:
+
+Each iteration of the dual decomposition methods inclued *broadcast* and *gather* operation.  First, $A_ix_i^{k+1}$ are collected(gathered). Second, compute the residual $Ax^{k+1}-b$.  Then, compute the (global) dual variable $y^{k+1}$. Finally, distributed (broadcast)  to the processors that carry out the $N$ individual $x_i$ minimization steps. 
