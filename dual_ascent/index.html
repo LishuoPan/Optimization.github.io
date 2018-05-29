@@ -59,6 +59,21 @@
             
     <li class="toctree-l2"><a href="#dual-ascent">Dual Ascent</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l3" href="#when-g-is-not-differentiable">When g is not differentiable</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#dual-decomposition">Dual Decomposition</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#implementation">Implementation:</a></li>
+        
+        </ul>
+    
 
     </ul>
 	    </li>
@@ -114,7 +129,7 @@ where <script type="math/tex">y</script> is the dual variable or Lagrange multip
 <script type="math/tex; mode=display">
 f^{*}(y):\sup\limits_{x\in domf}:(y^{T}x-f(x))
 </script>
-<script type="math/tex">Proof</script>:
+<script type="math/tex">\color{blue}{Proof}</script>:
 <script type="math/tex; mode=display">
 \begin{align}
 g(y) &= \inf\limits_{x} L(x,y)=\inf\limits_{x}f(x) +y^{T}Ax-y^{T}b\\&=-\sup\limits_{x}-f(x)+y^{T}(-Ax)+y^{T}b\\&=-f^{*}(-A^{T}y)-y^{T}b
@@ -132,12 +147,41 @@ x^{*}=arg\min\limits_{x} L(x,y^{*}),
 </script>
 provided that there is only one minimizer of <script type="math/tex">L(x,y^{*})</script>. </p>
 <p>The notation <script type="math/tex">\mbox{argmin}_{x}F(x)</script> denotes any minimizer of <script type="math/tex">F</script>. </p>
-<p>In the <script type="math/tex">dual\ ascent\ method</script>, we use <strong>greadient ascent</strong> to solve dual problem. Assuming <script type="math/tex">g</script> is differentiable. We first find <script type="math/tex">x^{+}=argmin_{x}L(x,y)</script>, then <script type="math/tex">\nabla g(y)=Ax^{+}-b</script>, which is the residual for the equality constraint. 
+<p>In the <script type="math/tex">dual\ ascent\ method</script>, we use <strong>greadient ascent</strong> to solve dual problem. Assuming <script type="math/tex">g</script> is differentiable. We first find <script type="math/tex">x^{+}=argmin_{x}L(x,y)</script>, then the gradient <script type="math/tex">\nabla g(y)=Ax^{+}-b</script>, which is the residual for the equality constraint. 
 <script type="math/tex; mode=display">
 x^{k+1}:=arg\min\limits_{x}L(x,y^{k})\\
 y^{k+1}:=y^{k}+\alpha^{k}(Ax^{k+1}-b),
 </script>
 where <script type="math/tex">\alpha^{k}>0</script> is a step size, the <script type="math/tex">k</script> is the iteration counter. With appropriate choice of <script type="math/tex">\alpha^{k}</script>, <script type="math/tex">g(y^{k+1})>g(y^{k})</script>. </p>
+<p>The principle is <script type="math/tex">\max\limits_{y}g(y)=\max\limits_{x}L(x,y) </script>, optimizing x and y alternatively to reach <script type="math/tex">L(x^{*},y^{*})</script>. </p>
+<h5 id="when-g-is-not-differentiable">When <script type="math/tex">g</script> is not differentiable</h5>
+<p>The residual <script type="math/tex">Ax^{k+1}-b</script> is not the gradient of <script type="math/tex">g</script>, but the negative of a subgradient of <script type="math/tex">-g</script>.  It is often that <script type="math/tex">g(y^{k+1})\ngtr g(y^{k})</script>. The algorithm is usually called the <script type="math/tex">dual\ subgradient\ method</script>. </p>
+<p>If <script type="math/tex">\alpha^{k}</script> is chosen appropriately and several other assumptions hold, then <script type="math/tex">x^{k}</script> converges to an optimal point and <script type="math/tex">y^{k}</script> converges to an opotimal dual point. </p>
+<p>However, these assumptions <em>do not hold</em> in many cases. For example,  if <script type="math/tex">f</script> is a nonzero affine function of any component of x, <script type="math/tex">L</script> is unbounded below in <script type="math/tex">x</script> for most <script type="math/tex">y</script>. </p>
+<h4 id="dual-decomposition">Dual Decomposition</h4>
+<p>The <script type="math/tex">\color{blue}{\mbox{major benefit}}</script> of the dual ascent is that it can lead to a decentralized algorithm in some cases.</p>
+<p>Suppose, <script type="math/tex">f</script> is <em>separable</em>, meaning that
+<script type="math/tex; mode=display">
+f(x)=\sum_{i=1}^{N}f_{i}(x_i),
+</script>
+where <script type="math/tex">x=(x_1,…,x_N)</script> and the variables <script type="math/tex">x_i\in\mathbb{R}^{n_i}</script> are subvectors of <script type="math/tex">x</script>. </p>
+<p>Partitioning the matrix <script type="math/tex">A</script> conformably as 
+<script type="math/tex; mode=display">
+A=[A_1\cdot\cdot\cdot A_N],
+</script>
+so <script type="math/tex">Ax=\sum_{i=1}^{N}A_ix_i</script>, the Lagrangian is 
+<script type="math/tex; mode=display">
+L(x,y )=\sum_{i=1}^{N}L_{i}(x_i,y)=\sum_{i=1}^{N}(f_{i}+y^TA_ix_i-(1/N)y^Tb)\\\mbox{such that } L(x,y)=f(x)+y^{T}(Ax-b)
+</script>
+which is also separable in <script type="math/tex">x</script>. <script type="math/tex">\color{blue}{\mbox{The x-minimization step splits into N separate prolems that can be solved in parallel.}}</script>
+</p>
+<p>Now, the algorithm is 
+<script type="math/tex; mode=display">
+x^{k+1}_i:=arg\min\limits_{x_i}L_i(x_i,y^k)\\y^{k+1}:=y^k+\alpha^{k}(Ax^{k+1}-b).
+</script>
+In this case, we refer to the dual ascent mehtod as <em>dual decomposition</em>. Dual decomposition is used to do dual acent method for separable <script type="math/tex">f(x)</script>. Dual decomposition is distributed dual ascent method. </p>
+<h6 id="implementation">Implementation:</h6>
+<p>Each iteration of the dual decomposition methods inclued <em>broadcast</em> and <em>gather</em> operation.  First, <script type="math/tex">A_ix_i^{k+1}</script> are collected(gathered). Second, compute the residual <script type="math/tex">Ax^{k+1}-b</script>.  Then, compute the (global) dual variable <script type="math/tex">y^{k+1}</script>. Finally, distributed (broadcast)  to the processors that carry out the <script type="math/tex">N</script> individual <script type="math/tex">x_i</script> minimization steps. </p>
               
             </div>
           </div>
