@@ -2,13 +2,17 @@
 
 Problem to solve:
 $$
-\mbox{minimize}  \ \ f(x) \\ \mbox{subject  to} \ \ Ax=b  \\x\ \in\ \mathbb{R}^{n} \ where \ A\  \in\  \mathbb{R}^{m\times n}\ and\ f:\mathbb{R}^{n} \rightarrow \mathbb{R}\ is\ convex
+\begin{equation}
+\mbox{minimize} \ \ f(x) \\
+\mbox{subject  to} \ \ Ax=b  \tag{2.1}
+\\x\ \in\ \mathbb{R}^{n} \ where \ A\  \in\  \mathbb{R}^{m\times n}\ and\ f:\mathbb{R}^{n} \rightarrow \mathbb{R}\ is\ convex
+\end{equation}
 $$
 
 
-The Lagrangian is:
+The Lagrangian for (2.1) is:
 $$
-L(x,y)=f(x)+y^{T}(Ax-b)
+L(x,y)=f(x)+y^{T}(Ax-b) 
 $$
 The dual function is:
 $$
@@ -40,12 +44,14 @@ x^{*}=arg\min\limits_{x} L(x,y^{*}),
 $$
 provided that there is only one minimizer of $L(x,y^{*})$. 
 
-The notation $\mbox{argmin}_{x}F(x)$ denotes any minimizer of $F$. 
+The notation $\mbox{argmin}_{x}F(x)​$ denotes any minimizer of $F​$. 
 
 In the $dual\ ascent\ method$, we use **greadient ascent** to solve dual problem. Assuming $g$ is differentiable. We first find $x^{+}=argmin_{x}L(x,y)$, then the gradient $\nabla g(y)=Ax^{+}-b$, which is the residual for the equality constraint. 
 $$
-x^{k+1}:=arg\min\limits_{x}L(x,y^{k})\\
-y^{k+1}:=y^{k}+\alpha^{k}(Ax^{k+1}-b),
+\begin{align}
+x^{k+1}&:=arg\min\limits_{x}L(x,y^{k})\tag{2.2}\\
+y^{k+1}&:=y^{k}+\alpha^{k}(Ax^{k+1}-b),\tag{2.3}
+\end{align}
 $$
 where $\alpha^{k}>0$ is a step size, the $k$ is the iteration counter. With appropriate choice of $\alpha^{k}$, $g(y^{k+1})>g(y^{k})$. 
 
@@ -81,13 +87,16 @@ which is also separable in $x$. $\color{blue}{\mbox{The x-minimization step spli
 
 Now, the algorithm is 
 $$
-x^{k+1}_i:=arg\min\limits_{x_i}L_i(x_i,y^k)\\y^{k+1}:=y^k+\alpha^{k}(Ax^{k+1}-b).
+\begin{align}
+x^{k+1}_i&:=arg\min\limits_{x_i}L_i(x_i,y^k)\tag{2.4}\\
+y^{k+1}&:=y^k+\alpha^{k}(Ax^{k+1}-b).\tag{2.5}
+\end{align}
 $$
 In this case, we refer to the dual ascent mehtod as *dual decomposition*. Dual decomposition is used to do dual acent method for separable $f(x)$. Dual decomposition is distributed dual ascent method. 
 
 ###### Implementation:
 
-Each iteration of the dual decomposition methods inclued *broadcast* and *gather* operation.  First, $A_ix_i^{k+1}$ are collected(gathered). Second, compute the residual $Ax^{k+1}-b$.  Then, compute the (global) dual variable $y^{k+1}$. Finally, distributed (broadcast)  to the processors that carry out the $N$ individual $x_i$ minimization steps. 
+Each iteration of the dual decomposition methods inclued *broadcast* and *gather* operation.  First, $A_ix_i^{k+1}$ are collected(gathered). Second, compute the residual $Ax^{k+1}-b$.  Then, compute the (global) dual variable $y^{k+1}$. Finally, distributed (broadcast)  to the processors that carry out the $N$ individual $x_i$ minimization steps (2.4). 
 
 #### Summary
 

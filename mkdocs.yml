@@ -2,6 +2,7 @@ site_name: Optimiation
 pages:
 - Home: index.md
 - Daul Ascent: dual_ascent.md
+- Augmented Lagrangians and the Method of Multipliers: Augmented Lagrangians and the Method of Multipliers.md
 theme: readthedocs
 
 python:
