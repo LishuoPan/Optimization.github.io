@@ -121,12 +121,16 @@
                 <h4 id="dual-ascent">Dual Ascent</h4>
 <p>Problem to solve:
 <script type="math/tex; mode=display">
-\mbox{minimize}  \ \ f(x) \\ \mbox{subject  to} \ \ Ax=b  \\x\ \in\ \mathbb{R}^{n} \ where \ A\  \in\  \mathbb{R}^{m\times n}\ and\ f:\mathbb{R}^{n} \rightarrow \mathbb{R}\ is\ convex
+\begin{equation}
+\mbox{minimize} \ \ f(x) \\
+\mbox{subject  to} \ \ Ax=b  \tag{2.1}
+\\x\ \in\ \mathbb{R}^{n} \ where \ A\  \in\  \mathbb{R}^{m\times n}\ and\ f:\mathbb{R}^{n} \rightarrow \mathbb{R}\ is\ convex
+\end{equation}
 </script>
 </p>
-<p>The Lagrangian is:
+<p>The Lagrangian for (2.1) is:
 <script type="math/tex; mode=display">
-L(x,y)=f(x)+y^{T}(Ax-b)
+L(x,y)=f(x)+y^{T}(Ax-b) 
 </script>
 The dual function is:
 <script type="math/tex; mode=display">
@@ -154,11 +158,13 @@ with variable <script type="math/tex">y\in \mathbb{R}^{m}</script>.</p>
 x^{*}=arg\min\limits_{x} L(x,y^{*}),
 </script>
 provided that there is only one minimizer of <script type="math/tex">L(x,y^{*})</script>. </p>
-<p>The notation <script type="math/tex">\mbox{argmin}_{x}F(x)</script> denotes any minimizer of <script type="math/tex">F</script>. </p>
+<p>The notation <script type="math/tex">\mbox{argmin}_{x}F(x)​</script> denotes any minimizer of <script type="math/tex">F​</script>. </p>
 <p>In the <script type="math/tex">dual\ ascent\ method</script>, we use <strong>greadient ascent</strong> to solve dual problem. Assuming <script type="math/tex">g</script> is differentiable. We first find <script type="math/tex">x^{+}=argmin_{x}L(x,y)</script>, then the gradient <script type="math/tex">\nabla g(y)=Ax^{+}-b</script>, which is the residual for the equality constraint. 
 <script type="math/tex; mode=display">
-x^{k+1}:=arg\min\limits_{x}L(x,y^{k})\\
-y^{k+1}:=y^{k}+\alpha^{k}(Ax^{k+1}-b),
+\begin{align}
+x^{k+1}&:=arg\min\limits_{x}L(x,y^{k})\tag{2.2}\\
+y^{k+1}&:=y^{k}+\alpha^{k}(Ax^{k+1}-b),\tag{2.3}
+\end{align}
 </script>
 where <script type="math/tex">\alpha^{k}>0</script> is a step size, the <script type="math/tex">k</script> is the iteration counter. With appropriate choice of <script type="math/tex">\alpha^{k}</script>, <script type="math/tex">g(y^{k+1})>g(y^{k})</script>. </p>
 <p>The principle is <script type="math/tex">\max\limits_{y}g(y)=\max\limits_{x}L(x,y) </script>, optimizing x and y alternatively to reach <script type="math/tex">L(x^{*},y^{*})</script>. </p>
@@ -185,11 +191,14 @@ which is also separable in <script type="math/tex">x</script>. <script type="mat
 </p>
 <p>Now, the algorithm is 
 <script type="math/tex; mode=display">
-x^{k+1}_i:=arg\min\limits_{x_i}L_i(x_i,y^k)\\y^{k+1}:=y^k+\alpha^{k}(Ax^{k+1}-b).
+\begin{align}
+x^{k+1}_i&:=arg\min\limits_{x_i}L_i(x_i,y^k)\tag{2.4}\\
+y^{k+1}&:=y^k+\alpha^{k}(Ax^{k+1}-b).\tag{2.5}
+\end{align}
 </script>
 In this case, we refer to the dual ascent mehtod as <em>dual decomposition</em>. Dual decomposition is used to do dual acent method for separable <script type="math/tex">f(x)</script>. Dual decomposition is distributed dual ascent method. </p>
 <h6 id="implementation">Implementation:</h6>
-<p>Each iteration of the dual decomposition methods inclued <em>broadcast</em> and <em>gather</em> operation.  First, <script type="math/tex">A_ix_i^{k+1}</script> are collected(gathered). Second, compute the residual <script type="math/tex">Ax^{k+1}-b</script>.  Then, compute the (global) dual variable <script type="math/tex">y^{k+1}</script>. Finally, distributed (broadcast)  to the processors that carry out the <script type="math/tex">N</script> individual <script type="math/tex">x_i</script> minimization steps. </p>
+<p>Each iteration of the dual decomposition methods inclued <em>broadcast</em> and <em>gather</em> operation.  First, <script type="math/tex">A_ix_i^{k+1}</script> are collected(gathered). Second, compute the residual <script type="math/tex">Ax^{k+1}-b</script>.  Then, compute the (global) dual variable <script type="math/tex">y^{k+1}</script>. Finally, distributed (broadcast)  to the processors that carry out the <script type="math/tex">N</script> individual <script type="math/tex">x_i</script> minimization steps (2.4). </p>
 <h4 id="summary">Summary</h4>
 <p>Advantages: </p>
 <p>Disadvantages:</p>

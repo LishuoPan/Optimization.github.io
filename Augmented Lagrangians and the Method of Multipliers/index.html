@@ -65,6 +65,9 @@
     <li class="toctree-l2"><a href="#augmented-lagrangians-and-the-method-of-multipliers">Augmented Lagrangians and the Method of Multipliers</a></li>
     
 
+    <li class="toctree-l2"><a href="#summary">Summary</a></li>
+    
+
     </ul>
 	    </li>
           
@@ -101,19 +104,53 @@
             <div class="section">
               
                 <h4 id="augmented-lagrangians-and-the-method-of-multipliers">Augmented Lagrangians and the Method of Multipliers</h4>
-<p>Purpose: bring robustness to the dual ascent method, and in particular, to yield convergence without assumptions like strict convexity or fiteness of <script type="math/tex">f</script>. </p>
-<p>The <em>Augmented Lagrangians</em> is:
+<p>Purpose: bring <em>robustness</em> to the dual ascent method, and in particular, to yield convergence without assumptions like strict convexity or finiteness of <script type="math/tex">f</script>. </p>
+<p>The <em>augmented Lagrangians</em> is:
 <script type="math/tex; mode=display">
-L_p(x,y)=f(x)+y^T(Ax-b)+(\rho/2)\|Ax=b\|^2_2,
+L_{\rho}(x,y)=f(x)+y^T(Ax-b)+(\rho/2)\|Ax-b\|^2_2,\tag{2.6}
 </script>
-where <script type="math/tex">\rho>0</script> is called the <em>penalty parameter</em>. The augmented Lagrangian cna be viewed as the (unaugmented) Lagrangian asscociated with the problem
+where <script type="math/tex">\rho>0</script> is called the <em>penalty parameter</em>. We can view this problem as adding a norm2 penalty term to Lagrangian. It can also be viewed as the (unaugmented) Lagrangian asscociated with the problem
 <script type="math/tex; mode=display">
 \mbox{minimize} \ \ \ f(x)+(\rho/2)\|Ax=b\|^2_2\\  \mbox{subject to  } \ Ax=b \ \  \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \
 </script>
-This part is highly related to proximal algorithm. </p>
-<p>​         <br />
-​     <br />
-​   </p>
+This part is highly related to proximal algorithm. The associated dual function is <script type="math/tex">g_p(y)=\inf_{x} L_{\rho}(x,y)</script>. </p>
+<p>The benefit of including the penalty term (<script type="math/tex">(\rho/2)\|Ax=b\|^2_2​</script>) is that <script type="math/tex">g_\rho​</script>   can be shown to be differentiable under rather mild conditions on the original problem. </p>
+<p>Applying the dual ascent to the modified problem:
+<script type="math/tex; mode=display">
+\begin{align}
+x^{k+1}&:=arg\min\limits_{x}L_\rho(x,y^{k})\tag{2.7}\\
+y^{k+1}&:=y^{k}+\rho(Ax^{k+1}-b),\tag{2.8}
+\end{align}
+</script>
+which is known as the <em>method of multipiers</em> for solving (2.1). The <script type="math/tex">x</script>-minimization step uses the augmented Lagrangian, and the penalty parameter <script type="math/tex">\rho</script> is used as the step size <script type="math/tex">\alpha^k</script>, campared to standard dual ascent.<br />
+<script type="math/tex; mode=display">
+L(x^*,y^k) \ \& \  L(x^{k+1},y^*) \Longrightarrow \ L(x^*,y^*)
+</script>
+The <em>method of multipiers</em> converges under far more general conditions than dual ascent, including cases when <script type="math/tex">f</script> takes on the value <script type="math/tex">+\infty</script> or is not strictly convex. </p>
+<p>For simplicity, we assume <script type="math/tex">f</script> is differentiable, though this is not required for the algorithm to work. The optimality conditions for (2.1) are primal and dual feasibility, 
+<script type="math/tex; mode=display">
+Ax^*-b=0, \ \ \ \ \ \  \nabla f(x^*)+A^Ty^*=0 
+</script>
+Since 
+<script type="math/tex; mode=display">
+\begin{align}
+\nabla_xL_\rho &= \nabla_x(f(x)+y^T(Ax-b)+\frac{\rho}{2}\|Ax-b\|^2_2) \\&= \nabla_xf(x)+A^Ty+\rho A^TAx-\rho A^Tb\\&=\nabla_xf(x)+A^T(y+\rho(Ax-b))
+\end{align}
+</script>
+ By definition, <script type="math/tex">x^{k+1}</script> minimizes <script type="math/tex">L_\rho(x,y^k)</script>, so 
+<script type="math/tex; mode=display">
+\begin{align}
+0&=\nabla_xL_\rho(x^{k+1,y^k}) \\ 
+&=\nabla_xf(x^{k+1})+A^T(y^k+\rho(Ax^{k+1}-b)) \\
+&=\nabla_xf(x^{k+1})+A^Ty^{k+1} \\
+&\Rightarrow \nabla_xf(x^*)+A^Ty^*
+\end{align}
+</script>
+By using <script type="math/tex">\rho</script> as the step size in the dual update, the iterate <script type="math/tex">(x^{k+1},y^{k+1})</script> is dual feasible. The primal residual <script type="math/tex">Ax^{k+1}-b</script> converges to zero as the method of multipliers proceeds, yielding optimality. </p>
+<p>When <script type="math/tex">f</script> is separable, the augmented Lagrangian <script type="math/tex">L_\rho</script> is not separable, so the <script type="math/tex">x</script>-minimization step (2.7) cannot be carried out separately in parallel for each <script type="math/tex">x_i</script>. This means that the basic methos of multipliers cannot be uesd for decomposition. </p>
+<h4 id="summary">Summary</h4>
+<p>Advantages: Not strict with <script type="math/tex">f(x)</script>; good converge property</p>
+<p>Disadvantages: distributed  </p>
               
             </div>
           </div>
