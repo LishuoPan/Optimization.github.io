@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Alternating Direciton of Multipliers - Optimiation</title>
+  <title>Alternating Direciton of Multipliers - Optimization</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -35,7 +35,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> Optimiation</a>
+        <a href=".." class="icon icon-home"> Optimization</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -70,6 +70,9 @@
     <li class="toctree-l2"><a href="#31-algorithm">3.1 Algorithm</a></li>
     
 
+    <li class="toctree-l2"><a href="#convergence">Convergence</a></li>
+    
+
     </ul>
 	    </li>
           
@@ -83,7 +86,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">Optimiation</a>
+        <a href="..">Optimization</a>
       </nav>
 
       
@@ -123,7 +126,7 @@ We form the <strong>augmented Lagrangian</strong>
 L_0(x,z,y)=f(x)+g(z)+y^T(Ax+Bz-c)\\
 L\rho(x,z,y)=f(x)+g(z)+y^T(Ax+Bz-c)+(\rho/2)\|Ax+Bz-c\|^2_2.
 </script>
-The <strong>iterations of ADMM</strong> is 
+The <strong>iterations of ADMM</strong> (unscaled form) is 
 <script type="math/tex; mode=display">
 \begin{align}
 x\mbox{-minimization step: }  x^{k+1}&:=arg\min_x L_\rho (x,z^k,y^k)  \tag{3.2}  \\
@@ -147,8 +150,23 @@ y^Tr+(\rho/2)\|r\|^2_2 &=(\rho/2)\|r+(1/\rho)y\|^2_2-(1/2\rho)\|y\|^2_2\\
 &=(\rho/2)\|r+u\|^2_2-(\rho/2)\|u\|^2_2,
 \end{align}
 </script>
-where <script type="math/tex">u=(1/\rho)y</script> is the <em>scaled dual variable.</em> </p>
-<p>ADMM can be expressed as
+where <script type="math/tex">u=(1/\rho)y</script> is the <em>scaled dual variable.</em> The <strong>augmented Lagrangian</strong> is
+<script type="math/tex; mode=display">
+L_\rho=f(x)+g(z)+(\rho/2)\|r+u\|^2_2-(\rho/2)\|u\|^2_2
+</script>
+ It is the same as unscaled form.</p>
+<p>
+<script type="math/tex">\color{blue}{Proof}</script>:
+<script type="math/tex; mode=display">
+\begin{align}
+(\rho/2)\|r+u\|^2_2 &=(\rho/2)\|Ax+Bz-c+\frac{1}{\rho}y\|^2_2\\
+&=(\rho/2)\left[\|Ax+Bz-c\|^2_2+(\rho/2)y^T(Ax+Bz-c)+\frac{1}{\rho^2}\|y\|^2_2\right]\\
+&=(\rho/2)\|Ax+Bz-c\|^2_2+y^T(Ax+Bz-c)+(1/2\rho)\|y\|^2_2\\ \\ 
+(\rho/2)\|u\|^2_2 &=(\rho/2)\times(1/\rho^2)\|y\|^2_2\\
+&=\frac{1}{2\rho}\|y\|^2_2\
+\end{align}
+</script>
+<strong>ADMM(scaled)</strong>  can be expressed as
 <script type="math/tex; mode=display">
 \begin{align}
 x\mbox{-minimization step: }  x^{k+1}&:=arg\min_x (  f(x)+(\rho/2)\|Ax+Bz^k-c+u^k\|^2_2 )\tag{3.5}  \\
@@ -156,7 +174,41 @@ z\mbox{-minimization step: }z^{k+1}&:=arg\min_z (  g(z)+(\rho/2)\|Ax^{k+1}+Bz-c+
 \mbox{Dual variable update: }u^{k+1}&:=u^k+Ax^{k+1}+B^{k+1}-c.\tag{3.7}
 \end{align}
 </script>
-</p>
+Defining the residual at iteration <script type="math/tex">k</script> as <script type="math/tex">r^k=Ax^k+Bz^k-c</script>, we see that 
+<script type="math/tex; mode=display">
+u^k=u^0+\sum_{j=1}^{k} r^j
+</script>
+the running sum of the residuals. </p>
+<p>We use the unscaled form when we wish to emphasize the role of the dual variable or to give an interpretation thet relies on the (unscaled) dual variable. </p>
+<h6 id="convergence">Convergence</h6>
+<p><strong>Assumpition 1</strong>: The (extended-real-valued) funcitons <script type="math/tex">f</script>: <script type="math/tex">\mathbb{R}^n\rightarrow\mathbb{R}\cup \{+\infty\}</script> and <script type="math/tex">g:\mathbb{R}^m\rightarrow\mathbb{R}\cup\{+\infty\}</script> are close, proper, and convex.</p>
+<p>The funciton satisfies as.1 if and only if its epigraph 
+<script type="math/tex; mode=display">
+\textbf{epi} \ f=\{(x,t)\in\mathbb{R}^n\times\mathbb{R}|f(x)\leq t\}
+</script>
+is a closed nonempty convex set.</p>
+<p>Assumption 1 allows <script type="math/tex">f</script> and <script type="math/tex">g</script> to be nondifferentiable and to assume the value <script type="math/tex">+\infty</script>. We can take <script type="math/tex">f</script> to be <strong>the indicator function</strong> of a closed nonempty convex set <script type="math/tex">C</script>, 
+<script type="math/tex; mode=display">
+\begin{equation}  
+f(x) = 
+\left\{  
+             \begin{array}{lr}  
+             1,  \mbox{for } x\in C   \\ 
+           +\infty,     \mbox{otherwise}
+             \end{array}  
+\right.  
+\end{equation}
+</script>
+In this case, the <script type="math/tex">x</script>-minimization step (3.2) will involve solving a constrained quadratic program over <script type="math/tex">C</script>, the effective domain of <script type="math/tex">f</script>. </p>
+<p><strong>Assumption 2</strong>: The unaugmented Lagrangian <script type="math/tex">L_0</script> has a saddle point.</p>
+<p>There exists <script type="math/tex">(x^*,z^*,y^*)</script>, not necessarily unique, for which
+<script type="math/tex; mode=display">
+L_0(x^*,z^*,y)\leq L_0(x^*,z^*,y^*)\leq L_0(x,z,y^*)
+</script>
+holds for all <script type="math/tex">x,z,y</script>. </p>
+<p>
+<script type="math/tex">L_0(x^*,z^*,y^*)</script> is finite for any saddle point <script type="math/tex">(x^*,z^*,y^*)</script>. This implies that <script type="math/tex">(x^*,z^*)</script> is a solution to (3.1), so <script type="math/tex">Ax^*+Bz^*=c</script> and <script type="math/tex">f(x^*)<\infty,g(z^*)<\infty</script>. It also implies that strong duality holds. </p>
+<p><strong>3.2.1 Convergence</strong> </p>
               
             </div>
           </div>
