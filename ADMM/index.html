@@ -59,7 +59,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../Augmented Lagrangians and the Method of Multipliers/">Augmented Lagrangians and the Method of Multipliers</a>
+    <a class="" href="../Augmented Lagrangians and the Method of Multipliers/">ADMM</a>
 	    </li>
           
             <li class="toctree-l1 current">
@@ -71,6 +71,9 @@
     
 
     <li class="toctree-l2"><a href="#convergence">Convergence</a></li>
+    
+
+    <li class="toctree-l2"><a href="#optimality-conditions-and-stopping-criterion">Optimality Conditions and Stopping Criterion</a></li>
     
 
     </ul>
@@ -108,7 +111,7 @@
           <div role="main">
             <div class="section">
               
-                <h6 id="31-algorithm">3.1 Algorithm</h6>
+                <h5 id="31-algorithm">3.1 Algorithm</h5>
 <p>It is an algorithm intended to blend the decomposability of dual ascent with the superior convergence properties of the method of multipliers. 
 <script type="math/tex; mode=display">
 \begin{align}
@@ -180,7 +183,7 @@ u^k=u^0+\sum_{j=1}^{k} r^j
 </script>
 the running sum of the residuals. </p>
 <p>We use the unscaled form when we wish to emphasize the role of the dual variable or to give an interpretation thet relies on the (unscaled) dual variable. </p>
-<h6 id="convergence">Convergence</h6>
+<h5 id="convergence">Convergence</h5>
 <p><strong>Assumpition 1</strong>: The (extended-real-valued) funcitons <script type="math/tex">f</script>: <script type="math/tex">\mathbb{R}^n\rightarrow\mathbb{R}\cup \{+\infty\}</script> and <script type="math/tex">g:\mathbb{R}^m\rightarrow\mathbb{R}\cup\{+\infty\}</script> are close, proper, and convex.</p>
 <p>The funciton satisfies as.1 if and only if its epigraph 
 <script type="math/tex; mode=display">
@@ -209,6 +212,57 @@ holds for all <script type="math/tex">x,z,y</script>. </p>
 <p>
 <script type="math/tex">L_0(x^*,z^*,y^*)</script> is finite for any saddle point <script type="math/tex">(x^*,z^*,y^*)</script>. This implies that <script type="math/tex">(x^*,z^*)</script> is a solution to (3.1), so <script type="math/tex">Ax^*+Bz^*=c</script> and <script type="math/tex">f(x^*)<\infty,g(z^*)<\infty</script>. It also implies that strong duality holds. </p>
 <p><strong>3.2.1 Convergence</strong> </p>
+<ul>
+<li>
+<p><em>Residual convergence.</em> <script type="math/tex">r^k \rightarrow0</script> as <script type="math/tex">k \rightarrow\infty</script>. </p>
+</li>
+<li>
+<p><em>Objective convergence.</em>  <script type="math/tex">f(x^k )+g(z^k)\rightarrow p^*  \mbox{as}\  k\rightarrow\infty</script>. </p>
+</li>
+<li>
+<p><em>Dual variable convergence.</em> <script type="math/tex">y^k\rightarrow y^* \mbox{as}\ k\rightarrow \infty </script>, where <script type="math/tex">y^*</script> is a dual optimal point. </p>
+</li>
+</ul>
+<p>Note that <script type="math/tex">x^k</script> and <script type="math/tex">z^k</script> need not converge to optimal values. </p>
+<p>​</p>
+<p><strong>3.2.2 Convergence in Practice</strong></p>
+<p>The general case ADMM will be practically useful mostly in cases when modest accuracy is sufficient. </p>
+<h5 id="optimality-conditions-and-stopping-criterion">Optimality Conditions and Stopping Criterion</h5>
+<p>The necessary and sufficient optimality conditions for the ADMM problem (3.1) are primal feasibility,
+<script type="math/tex; mode=display">
+Ax^*+Bz^*-c=0 \tag{3.8}
+</script>
+and dual feasibility,
+<script type="math/tex; mode=display">
+\begin{align}
+0\in \partial f(x^*)+A^Ty^* \tag{3.9}\\
+0\in \partial g(z^*)+B^Ty^* \tag{3.10}
+\end{align}
+</script>
+Here, <script type="math/tex">\partial</script> denotes the <em>subdifferential operator</em>.  </p>
+<p>Since <script type="math/tex">z^{k+1}</script> minimizes <script type="math/tex">L_\rho (x^{k+1},z,y^k)</script> by definition, we have
+<script type="math/tex; mode=display">
+\begin{align}
+0&\in\partial g(z^{k+1})+B^Ty^k+\rho B^T(Ax^{k+1}+Bz^{k+1}-c)\\
+&=\partial g(z^{k+1})+B^Ty^k+\rho B^Tr^{k+1}\\
+&=\partial g(z^{k+1})+B^Ty^{k+1}
+\end{align}
+</script>
+This means that <script type="math/tex">z^{k+1}</script> and <script type="math/tex">y^{k+1}</script> always satisfy (3.10). Now we have to optimize (3.8) and (3.9). </p>
+<p>Since <script type="math/tex">x^{k+1}</script> minimizes <script type="math/tex">L_\rho (x,z^{k},y^k)</script> by definition, we have
+<script type="math/tex; mode=display">
+\begin{align}
+0&\in\partial f(x^{k+1})+A^Ty^k+\rho A^T(Ax^{k+1}+Bz^{k}-c)\\
+&=\partial f(z^{k+1})+A^T(y^k+\rho r^{k+1}+\rho B(z^k-z^{k+1}))\\
+&=\partial f(z^{k+1})+A^Ty^{k+1} +\rho A^TB(z^k-z^{k+1})
+\end{align}
+</script>
+or equivalently,
+<script type="math/tex; mode=display">
+\rho A^TB(z^{k+1}-z^{k}) \in \partial f(x^{k+1})+A^Ty^{k+1}
+</script>
+We define <script type="math/tex">s^{k+1} = \rho A^TB(z^{k+1}-z^{k}) </script> as the <em>dual residual</em> at iteration <script type="math/tex">k+1</script>, and <script type="math/tex">r^{k+1}=Ax^{k+1}+Bz^{k+1}-c</script> as the <em>primal residual</em> at iteration <script type="math/tex">k+1</script>. These two resuduals converge to zero as ADMM proceeds. The (3.10) always holds for <script type="math/tex">(x^{k+1},z^{k+1},y{k+1})</script>. </p>
+<p><strong>3.3.1 Stopping criteria</strong></p>
               
             </div>
           </div>
@@ -217,7 +271,7 @@ holds for all <script type="math/tex">x,z,y</script>. </p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="../Augmented Lagrangians and the Method of Multipliers/" class="btn btn-neutral" title="Augmented Lagrangians and the Method of Multipliers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Augmented Lagrangians and the Method of Multipliers/" class="btn btn-neutral" title="ADMM"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
