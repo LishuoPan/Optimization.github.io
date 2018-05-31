@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2018-05-30</lastmod>
+     <lastmod>2018-05-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +12,7 @@
     
     <url>
      <loc>/dual_ascent/</loc>
-     <lastmod>2018-05-30</lastmod>
+     <lastmod>2018-05-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -20,7 +20,15 @@
     
     <url>
      <loc>/Augmented Lagrangians and the Method of Multipliers/</loc>
-     <lastmod>2018-05-30</lastmod>
+     <lastmod>2018-05-31</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/ADMM/</loc>
+     <lastmod>2018-05-31</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
