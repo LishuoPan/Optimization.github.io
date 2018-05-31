@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Alternating Direciton of Multipliers - Optimization</title>
+  <title>ADMM - Optimization</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,7 +17,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Alternating Direciton of Multipliers";
+    var mkdocs_page_name = "ADMM";
     var mkdocs_page_input_path = "ADMM.md";
     var mkdocs_page_url = "/ADMM/";
   </script>
@@ -59,21 +59,21 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../Augmented Lagrangians and the Method of Multipliers/">ADMM</a>
+    <a class="" href="../Augmented Lagrangians and the Method of Multipliers/">Augmented Lagrangian and the Method of Multipliers</a>
 	    </li>
           
             <li class="toctree-l1 current">
 		
-    <a class="current" href="./">Alternating Direciton of Multipliers</a>
+    <a class="current" href="./">ADMM</a>
     <ul class="subnav">
             
     <li class="toctree-l2"><a href="#31-algorithm">3.1 Algorithm</a></li>
     
 
-    <li class="toctree-l2"><a href="#convergence">Convergence</a></li>
+    <li class="toctree-l2"><a href="#32-convergence">3.2 Convergence</a></li>
     
 
-    <li class="toctree-l2"><a href="#optimality-conditions-and-stopping-criterion">Optimality Conditions and Stopping Criterion</a></li>
+    <li class="toctree-l2"><a href="#33-optimality-conditions-and-stopping-criterion">3.3 Optimality Conditions and Stopping Criterion</a></li>
     
 
     </ul>
@@ -101,7 +101,7 @@
     
       
     
-    <li>Alternating Direciton of Multipliers</li>
+    <li>ADMM</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -183,7 +183,7 @@ u^k=u^0+\sum_{j=1}^{k} r^j
 </script>
 the running sum of the residuals. </p>
 <p>We use the unscaled form when we wish to emphasize the role of the dual variable or to give an interpretation thet relies on the (unscaled) dual variable. </p>
-<h5 id="convergence">Convergence</h5>
+<h5 id="32-convergence">3.2 Convergence</h5>
 <p><strong>Assumpition 1</strong>: The (extended-real-valued) funcitons <script type="math/tex">f</script>: <script type="math/tex">\mathbb{R}^n\rightarrow\mathbb{R}\cup \{+\infty\}</script> and <script type="math/tex">g:\mathbb{R}^m\rightarrow\mathbb{R}\cup\{+\infty\}</script> are close, proper, and convex.</p>
 <p>The funciton satisfies as.1 if and only if its epigraph 
 <script type="math/tex; mode=display">
@@ -227,7 +227,7 @@ holds for all <script type="math/tex">x,z,y</script>. </p>
 <p>​</p>
 <p><strong>3.2.2 Convergence in Practice</strong></p>
 <p>The general case ADMM will be practically useful mostly in cases when modest accuracy is sufficient. </p>
-<h5 id="optimality-conditions-and-stopping-criterion">Optimality Conditions and Stopping Criterion</h5>
+<h5 id="33-optimality-conditions-and-stopping-criterion">3.3 Optimality Conditions and Stopping Criterion</h5>
 <p>The necessary and sufficient optimality conditions for the ADMM problem (3.1) are primal feasibility,
 <script type="math/tex; mode=display">
 Ax^*+Bz^*-c=0 \tag{3.8}
@@ -271,7 +271,7 @@ We define <script type="math/tex">s^{k+1} = \rho A^TB(z^{k+1}-z^{k}) </script> a
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="../Augmented Lagrangians and the Method of Multipliers/" class="btn btn-neutral" title="ADMM"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Augmented Lagrangians and the Method of Multipliers/" class="btn btn-neutral" title="Augmented Lagrangian and the Method of Multipliers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   

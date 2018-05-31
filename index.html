@@ -60,6 +60,8 @@
         
             <li><a class="toctree-l3" href="#augmented-lagrangians-and-the-method-of-multipliers">Augmented Lagrangians and the Method of Multipliers</a></li>
         
+            <li><a class="toctree-l3" href="#admm">ADMM</a></li>
+        
         </ul>
     
 
@@ -73,12 +75,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="Augmented Lagrangians and the Method of Multipliers/">ADMM</a>
+    <a class="" href="Augmented Lagrangians and the Method of Multipliers/">Augmented Lagrangian and the Method of Multipliers</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="ADMM/">Alternating Direciton of Multipliers</a>
+    <a class="" href="ADMM/">ADMM</a>
 	    </li>
           
         </ul>
@@ -116,11 +118,28 @@
                 <h1 id="welcome-to-optimization">Welcome to Optimization</h1>
 <p>It is a tutorial for optimization methods. </p>
 <h2 id="dual-ascent">Dual Ascent</h2>
-<ul>
-<li><code>Dual Ascent</code> - </li>
-<li><code>Dual Decomposition</code> -</li>
-</ul>
+<p><strong>Dual Ascent:</strong> 
+<script type="math/tex; mode=display">
+L(x,y)=f(x)+y^{T}(Ax-b)
+</script>
+</p>
+<p><strong>Dual Decomposition:</strong> 
+<script type="math/tex; mode=display">
+L(x,y )=\sum_{i=1}^{N}L_{i}(x_i,y)=\sum_{i=1}^{N}(f_{i}+y^TA_ix_i-(1/N)y^Tb)\\\mbox{such that } L(x,y)=f(x)+y^{T}(Ax-b)
+</script>
+</p>
 <h2 id="augmented-lagrangians-and-the-method-of-multipliers">Augmented Lagrangians and the Method of Multipliers</h2>
+<p>
+<script type="math/tex; mode=display">
+L_{\rho}(x,y)=f(x)+y^T(Ax-b)+(\rho/2)\|Ax-b\|^2_2
+</script>
+</p>
+<h2 id="admm">ADMM</h2>
+<p>
+<script type="math/tex; mode=display">
+L\rho(x,z,y)=f(x)+g(z)+y^T(Ax+Bz-c)+(\rho/2)\|Ax+Bz-c\|^2_2.
+</script>
+</p>
               
             </div>
           </div>
@@ -171,5 +190,5 @@
 
 <!--
 MkDocs version : 0.17.3
-Build Date UTC : 2018-05-31 16:07:50
+Build Date UTC : 2018-05-31 16:20:02
 -->

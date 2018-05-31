@@ -57,7 +57,7 @@
     <a class="current" href="./">Daul Ascent</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#dual-ascent">Dual Ascent</a></li>
+    <li class="toctree-l2"><a href="#21-dual-ascent">2.1 Dual Ascent</a></li>
     
         <ul>
         
@@ -66,7 +66,7 @@
         </ul>
     
 
-    <li class="toctree-l2"><a href="#dual-decomposition">Dual Decomposition</a></li>
+    <li class="toctree-l2"><a href="#22-dual-decomposition">2.2 Dual Decomposition</a></li>
     
         <ul>
         
@@ -83,12 +83,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../Augmented Lagrangians and the Method of Multipliers/">ADMM</a>
+    <a class="" href="../Augmented Lagrangians and the Method of Multipliers/">Augmented Lagrangian and the Method of Multipliers</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../ADMM/">Alternating Direciton of Multipliers</a>
+    <a class="" href="../ADMM/">ADMM</a>
 	    </li>
           
         </ul>
@@ -123,7 +123,7 @@
           <div role="main">
             <div class="section">
               
-                <h4 id="dual-ascent">Dual Ascent</h4>
+                <h4 id="21-dual-ascent">2.1 Dual Ascent</h4>
 <p>Problem to solve:
 <script type="math/tex; mode=display">
 \begin{equation}
@@ -177,7 +177,7 @@ where <script type="math/tex">\alpha^{k}>0</script> is a step size, the <script 
 <p>The residual <script type="math/tex">Ax^{k+1}-b</script> is not the gradient of <script type="math/tex">g</script>, but the negative of a subgradient of <script type="math/tex">-g</script>.  It is often that <script type="math/tex">g(y^{k+1})\ngtr g(y^{k})</script>. The algorithm is usually called the <script type="math/tex">dual\ subgradient\ method</script>. </p>
 <p>If <script type="math/tex">\alpha^{k}</script> is chosen appropriately and several other assumptions hold, then <script type="math/tex">x^{k}</script> converges to an optimal point and <script type="math/tex">y^{k}</script> converges to an opotimal dual point. </p>
 <p>However, these assumptions <em>do not hold</em> in many cases. For example,  if <script type="math/tex">f</script> is a nonzero affine function of any component of x, <script type="math/tex">L</script> is unbounded below in <script type="math/tex">x</script> for most <script type="math/tex">y</script>. </p>
-<h4 id="dual-decomposition">Dual Decomposition</h4>
+<h4 id="22-dual-decomposition">2.2 Dual Decomposition</h4>
 <p>The <script type="math/tex">\color{blue}{\mbox{major benefit}}</script> of the dual ascent is that it can lead to a decentralized algorithm in some cases.</p>
 <p>Suppose, <script type="math/tex">f</script> is <em>separable</em>, meaning that
 <script type="math/tex; mode=display">
@@ -214,7 +214,7 @@ In this case, we refer to the dual ascent mehtod as <em>dual decomposition</em>.
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Augmented Lagrangians and the Method of Multipliers/" class="btn btn-neutral float-right" title="ADMM">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Augmented Lagrangians and the Method of Multipliers/" class="btn btn-neutral float-right" title="Augmented Lagrangian and the Method of Multipliers">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href=".." class="btn btn-neutral" title="Introduciton"><span class="icon icon-circle-arrow-left"></span> Previous</a>
