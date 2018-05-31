@@ -44,7 +44,7 @@ x^{*}=arg\min\limits_{x} L(x,y^{*}),
 $$
 provided that there is only one minimizer of $L(x,y^{*})$. 
 
-The notation $\mbox{argmin}_{x}F(x)​$ denotes any minimizer of $F​$. 
+The notation $\mbox{argmin}_{x}F(x)$ denotes any minimizer of $F$. 
 
 In the $dual\ ascent\ method$, we use **greadient ascent** to solve dual problem. Assuming $g$ is differentiable. We first find $x^{+}=argmin_{x}L(x,y)$, then the gradient $\nabla g(y)=Ax^{+}-b$, which is the residual for the equality constraint. 
 $$
@@ -94,7 +94,7 @@ y^{k+1}&:=y^k+\alpha^{k}(Ax^{k+1}-b).\tag{2.5}
 $$
 In this case, we refer to the dual ascent mehtod as *dual decomposition*. Dual decomposition is used to do dual acent method for separable $f(x)$. Dual decomposition is distributed dual ascent method. 
 
-###### Implementation:
+###### Implementation
 
 Each iteration of the dual decomposition methods inclued *broadcast* and *gather* operation.  First, $A_ix_i^{k+1}$ are collected(gathered). Second, compute the residual $Ax^{k+1}-b$.  Then, compute the (global) dual variable $y^{k+1}$. Finally, distributed (broadcast)  to the processors that carry out the $N$ individual $x_i$ minimization steps (2.4). 
 
