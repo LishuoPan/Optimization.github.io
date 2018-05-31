@@ -1,4 +1,4 @@
-###### 3.1 Algorithm
+##### 3.1 Algorithm
 
 It is an algorithm intended to blend the decomposability of dual ascent with the superior convergence properties of the method of multipliers. 
 $$
@@ -76,7 +76,7 @@ the running sum of the residuals.
 
 We use the unscaled form when we wish to emphasize the role of the dual variable or to give an interpretation thet relies on the (unscaled) dual variable. 
 
-###### Convergence
+##### Convergence
 
 **Assumpition 1**: The (extended-real-valued) funcitons $f$: $\mathbb{R}^n\rightarrow\mathbb{R}\cup \{+\infty\}$ and $g:\mathbb{R}^m\rightarrow\mathbb{R}\cup\{+\infty\}$ are close, proper, and convex.
 
@@ -111,4 +111,59 @@ holds for all $x,z,y$.
 $L_0(x^*,z^*,y^*)$ is finite for any saddle point $(x^*,z^*,y^*)$. This implies that $(x^*,z^*)$ is a solution to (3.1), so $Ax^*+Bz^*=c$ and $f(x^*)<\infty,g(z^*)<\infty$. It also implies that strong duality holds. 
 
 **3.2.1 Convergence** 
+
+* *Residual convergence.* $r^k \rightarrow0$ as $k \rightarrow\infty$. 
+
+* *Objective convergence.*  $f(x^k )+g(z^k)\rightarrow p^*  \mbox{as}\  k\rightarrow\infty$. 
+
+* *Dual variable convergence.* $y^k\rightarrow y^* \mbox{as}\ k\rightarrow \infty $, where $y^*$ is a dual optimal point. 
+
+  Note that $x^k$ and $z^k$ need not converge to optimal values. 
+
+  ​
+
+**3.2.2 Convergence in Practice**
+
+The general case ADMM will be practically useful mostly in cases when modest accuracy is sufficient. 
+
+##### Optimality Conditions and Stopping Criterion
+
+The necessary and sufficient optimality conditions for the ADMM problem (3.1) are primal feasibility,
+$$
+Ax^*+Bz^*-c=0 \tag{3.8}
+$$
+and dual feasibility,
+$$
+\begin{align}
+0\in \partial f(x^*)+A^Ty^* \tag{3.9}\\
+0\in \partial g(z^*)+B^Ty^* \tag{3.10}
+\end{align}
+$$
+Here, $\partial$ denotes the *subdifferential operator*.  
+
+Since $z^{k+1}$ minimizes $L_\rho (x^{k+1},z,y^k)$ by definition, we have
+$$
+\begin{align}
+0&\in\partial g(z^{k+1})+B^Ty^k+\rho B^T(Ax^{k+1}+Bz^{k+1}-c)\\
+&=\partial g(z^{k+1})+B^Ty^k+\rho B^Tr^{k+1}\\
+&=\partial g(z^{k+1})+B^Ty^{k+1}
+\end{align}
+$$
+This means that $z^{k+1}$ and $y^{k+1}$ always satisfy (3.10). Now we have to optimize (3.8) and (3.9). 
+
+Since $x^{k+1}$ minimizes $L_\rho (x,z^{k},y^k)$ by definition, we have
+$$
+\begin{align}
+0&\in\partial f(x^{k+1})+A^Ty^k+\rho A^T(Ax^{k+1}+Bz^{k}-c)\\
+&=\partial f(z^{k+1})+A^T(y^k+\rho r^{k+1}+\rho B(z^k-z^{k+1}))\\
+&=\partial f(z^{k+1})+A^Ty^{k+1} +\rho A^TB(z^k-z^{k+1})
+\end{align}
+$$
+or equivalently,
+$$
+\rho A^TB(z^{k+1}-z^{k}) \in \partial f(x^{k+1})+A^Ty^{k+1}
+$$
+We define $s^{k+1} = \rho A^TB(z^{k+1}-z^{k}) $ as the *dual residual* at iteration $k+1$, and $r^{k+1}=Ax^{k+1}+Bz^{k+1}-c$ as the *primal residual* at iteration $k+1$. These two resuduals converge to zero as ADMM proceeds. The (3.10) always holds for $(x^{k+1},z^{k+1},y{k+1})$. 
+
+**3.3.1 Stopping criteria**
 

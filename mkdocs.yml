@@ -2,7 +2,7 @@ site_name: Optimization
 pages:
 - Introduciton: index.md
 - Daul Ascent: dual_ascent.md
-- Augmented Lagrangians and the Method of Multipliers: Augmented Lagrangians and the Method of Multipliers.md
+- ADMM: Augmented Lagrangians and the Method of Multipliers.md
 - Alternating Direciton of Multipliers: ADMM.md
 theme: readthedocs
 
