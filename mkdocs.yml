@@ -2,8 +2,8 @@ site_name: Optimization
 pages:
 - Introduciton: index.md
 - Daul Ascent: dual_ascent.md
-- ADMM: Augmented Lagrangians and the Method of Multipliers.md
-- Alternating Direciton of Multipliers: ADMM.md
+- Augmented Lagrangian and the Method of Multipliers: Augmented Lagrangians and the Method of Multipliers.md
+- ADMM: ADMM.md
 theme: readthedocs
 
 python:

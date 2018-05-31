@@ -76,7 +76,7 @@ the running sum of the residuals.
 
 We use the unscaled form when we wish to emphasize the role of the dual variable or to give an interpretation thet relies on the (unscaled) dual variable. 
 
-##### Convergence
+##### 3.2 Convergence
 
 **Assumpition 1**: The (extended-real-valued) funcitons $f$: $\mathbb{R}^n\rightarrow\mathbb{R}\cup \{+\infty\}$ and $g:\mathbb{R}^m\rightarrow\mathbb{R}\cup\{+\infty\}$ are close, proper, and convex.
 
@@ -126,7 +126,7 @@ $L_0(x^*,z^*,y^*)$ is finite for any saddle point $(x^*,z^*,y^*)$. This implies 
 
 The general case ADMM will be practically useful mostly in cases when modest accuracy is sufficient. 
 
-##### Optimality Conditions and Stopping Criterion
+##### 3.3 Optimality Conditions and Stopping Criterion
 
 The necessary and sufficient optimality conditions for the ADMM problem (3.1) are primal feasibility,
 $$

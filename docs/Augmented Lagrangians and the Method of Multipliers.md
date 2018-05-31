@@ -1,4 +1,4 @@
-#### Augmented Lagrangians and the Method of Multipliers
+##### 2.3 Augmented Lagrangians and the Method of Multipliers
 
 Purpose: bring *robustness* to the dual ascent method, and in particular, to yield convergence without assumptions like strict convexity or finiteness of $f$. 
 

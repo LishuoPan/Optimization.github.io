@@ -1,4 +1,4 @@
-#### Dual Ascent 
+#### 2.1 Dual Ascent 
 
 Problem to solve:
 $$
@@ -65,7 +65,7 @@ If $\alpha^{k}$ is chosen appropriately and several other assumptions hold, then
 
 However, these assumptions *do not hold* in many cases. For example,  if $f$ is a nonzero affine function of any component of x, $L$ is unbounded below in $x$ for most $y$. 
 
-#### Dual Decomposition 
+#### 2.2 Dual Decomposition 
 
 The $\color{blue}{\mbox{major benefit}}$ of the dual ascent is that it can lead to a decentralized algorithm in some cases.
 
