@@ -1,4 +1,4 @@
-site_name: Optimiation
+site_name: Optimization
 pages:
 - Introduciton: index.md
 - Daul Ascent: dual_ascent.md

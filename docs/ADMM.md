@@ -18,7 +18,7 @@ $$
 L_0(x,z,y)=f(x)+g(z)+y^T(Ax+Bz-c)\\
 L\rho(x,z,y)=f(x)+g(z)+y^T(Ax+Bz-c)+(\rho/2)\|Ax+Bz-c\|^2_2.
 $$
-The **iterations of ADMM** is 
+The **iterations of ADMM** (unscaled form) is 
 $$
 \begin{align}
 x\mbox{-minimization step: }  x^{k+1}&:=arg\min_x L_\rho (x,z^k,y^k)  \tag{3.2}  \\
@@ -44,9 +44,23 @@ y^Tr+(\rho/2)\|r\|^2_2 &=(\rho/2)\|r+(1/\rho)y\|^2_2-(1/2\rho)\|y\|^2_2\\
 &=(\rho/2)\|r+u\|^2_2-(\rho/2)\|u\|^2_2,
 \end{align}
 $$
-where $u=(1/\rho)y$ is the *scaled dual variable.* 
+where $u=(1/\rho)y$ is the *scaled dual variable.* The **augmented Lagrangian** is
+$$
+L_\rho=f(x)+g(z)+(\rho/2)\|r+u\|^2_2-(\rho/2)\|u\|^2_2
+$$
+ It is the same as unscaled form.
 
-ADMM can be expressed as
+$\color{blue}{Proof}$:
+$$
+\begin{align}
+(\rho/2)\|r+u\|^2_2 &=(\rho/2)\|Ax+Bz-c+\frac{1}{\rho}y\|^2_2\\
+&=(\rho/2)\left[\|Ax+Bz-c\|^2_2+(\rho/2)y^T(Ax+Bz-c)+\frac{1}{\rho^2}\|y\|^2_2\right]\\
+&=(\rho/2)\|Ax+Bz-c\|^2_2+y^T(Ax+Bz-c)+(1/2\rho)\|y\|^2_2\\ \\ 
+(\rho/2)\|u\|^2_2 &=(\rho/2)\times(1/\rho^2)\|y\|^2_2\\
+&=\frac{1}{2\rho}\|y\|^2_2\
+\end{align}
+$$
+**ADMM(scaled)**  can be expressed as
 $$
 \begin{align}
 x\mbox{-minimization step: }  x^{k+1}&:=arg\min_x (  f(x)+(\rho/2)\|Ax+Bz^k-c+u^k\|^2_2 )\tag{3.5}  \\
@@ -54,5 +68,47 @@ z\mbox{-minimization step: }z^{k+1}&:=arg\min_z (  g(z)+(\rho/2)\|Ax^{k+1}+Bz-c+
 \mbox{Dual variable update: }u^{k+1}&:=u^k+Ax^{k+1}+B^{k+1}-c.\tag{3.7}
 \end{align}
 $$
+Defining the residual at iteration $k$ as $r^k=Ax^k+Bz^k-c$, we see that 
+$$
+u^k=u^0+\sum_{j=1}^{k} r^j
+$$
+the running sum of the residuals. 
 
+We use the unscaled form when we wish to emphasize the role of the dual variable or to give an interpretation thet relies on the (unscaled) dual variable. 
+
+###### Convergence
+
+**Assumpition 1**: The (extended-real-valued) funcitons $f$: $\mathbb{R}^n\rightarrow\mathbb{R}\cup \{+\infty\}$ and $g:\mathbb{R}^m\rightarrow\mathbb{R}\cup\{+\infty\}$ are close, proper, and convex.
+
+The funciton satisfies as.1 if and only if its epigraph 
+$$
+\textbf{epi} \ f=\{(x,t)\in\mathbb{R}^n\times\mathbb{R}|f(x)\leq t\}
+$$
+is a closed nonempty convex set.
+
+Assumption 1 allows $f$ and $g$ to be nondifferentiable and to assume the value $+\infty$. We can take $f$ to be **the indicator function** of a closed nonempty convex set $C$, 
+$$
+\begin{equation}  
+f(x) = 
+\left\{  
+             \begin{array}{lr}  
+             1,  \mbox{for } x\in C   \\ 
+           +\infty,     \mbox{otherwise}
+             \end{array}  
+\right.  
+\end{equation}
+$$
+In this case, the $x$-minimization step (3.2) will involve solving a constrained quadratic program over $C$, the effective domain of $f$. 
+
+ **Assumption 2**: The unaugmented Lagrangian $L_0$ has a saddle point.
+
+There exists $(x^*,z^*,y^*)$, not necessarily unique, for which
+$$
+L_0(x^*,z^*,y)\leq L_0(x^*,z^*,y^*)\leq L_0(x,z,y^*)
+$$
+holds for all $x,z,y$. 
+
+$L_0(x^*,z^*,y^*)$ is finite for any saddle point $(x^*,z^*,y^*)$. This implies that $(x^*,z^*)$ is a solution to (3.1), so $Ax^*+Bz^*=c$ and $f(x^*)<\infty,g(z^*)<\infty$. It also implies that strong duality holds. 
+
+**3.2.1 Convergence** 
 
